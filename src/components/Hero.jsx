@@ -21,7 +21,7 @@ export default function Hero() {
         className="absolute inset-0 -z-20 h-full w-full object-cover object-[50%_58%]"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_32%,rgba(73,0,18,.45),transparent_58%),linear-gradient(180deg,rgba(7,2,3,.66)_0%,rgba(19,2,7,.72)_48%,rgba(5,2,3,.92)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_32%,rgba(73,0,18,.28),transparent_60%),linear-gradient(180deg,rgba(7,2,3,.42)_0%,rgba(19,2,7,.54)_48%,rgba(5,2,3,.78)_100%)]" />
 
       <div className="relative z-10 flex flex-col items-center">
         <div className="mb-4 text-[34px] text-gold animate-floaty">♛</div>

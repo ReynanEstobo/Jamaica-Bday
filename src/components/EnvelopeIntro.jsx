@@ -192,7 +192,6 @@ export default function EnvelopeIntro({ onOpened }) {
         }
 
         .invitation-card { border-radius: clamp(7px, 2.4cqw, 12px); }
-        .invitation-card h2 { font-size: clamp(1.35rem, 8.5cqw, 2.25rem); }
         .invitation-card .card-kicker { font-size: clamp(7px, 2.35cqw, 10px); letter-spacing: clamp(.18rem, 1.25cqw, .38rem); }
         .invitation-card .card-roman { font-size: clamp(9px, 2.8cqw, 12px); letter-spacing: clamp(.18rem, 1.1cqw, .32rem); }
         .invitation-card .card-event { font-size: clamp(8px, 2.55cqw, 11px); letter-spacing: clamp(.12rem, .9cqw, .25rem); }
@@ -492,96 +491,34 @@ export default function EnvelopeIntro({ onOpened }) {
 
               `}
             >
-              <div className="pointer-events-none absolute inset-[7px] rounded-[7px] border border-[#c8a858]/30" />
+              <img
+                src="/images/envelope-family.JPG"
+                alt="Jamaica with her family"
+                className="absolute bottom-[12%] left-[7%] top-[12%] w-[37%] -rotate-2 rounded-sm border-2 border-white object-cover object-[50%_42%] shadow-[0_7px_14px_rgba(65,42,20,.3),0_1px_2px_rgba(65,42,20,.25)]"
+              />
               <div className="paper-grain pointer-events-none absolute inset-0 opacity-40" />
-              <span className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l border-t border-[#c4a04b]/45" />
-              <span className="pointer-events-none absolute right-3 top-3 h-3 w-3 border-r border-t border-[#c4a04b]/45" />
-              <span className="pointer-events-none absolute bottom-3 left-3 h-3 w-3 border-b border-l border-[#c4a04b]/45" />
-              <span className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b border-r border-[#c4a04b]/45" />
-              <div className="pointer-events-none absolute left-1/2 top-4 h-px w-12 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#c5a24a]/55 to-transparent" />
-              <p
-                className="card-kicker
-                uppercase
-
-                tracking-[0.38rem]
-
-                text-[10px]
-
-                text-[#9b7a38]
-                "
-              >
-                You're Invited
-              </p>
-
-              <div
-                className="
-                w-16
-
-                h-px
-
-                bg-gold/40
-
-                my-4
-                "
-              />
-
-              <h2
-                className="
-                font-cinzel
-
-                text-[clamp(1.65rem,7vw,2.25rem)]
-
-                uppercase
-
-                tracking-[0.3rem]
-
-                text-[#73182b]
-                "
-              >
-                Jamaica
-              </h2>
-
-              <p
-                className="card-roman
-                mt-2
-
-                uppercase
-
-                tracking-[0.32rem]
-
-                text-[12px]
-
-                text-[#65584b]
-                "
-              >
-                XVIII
-              </p>
-
-              <div
-                className="
-                w-16
-
-                h-px
-
-                bg-gold/40
-
-                my-4
-                "
-              />
-
-              <p
-                className="card-event
-                uppercase
-
-                tracking-[0.25rem]
-
-                text-[11px]
-
-                text-[#65584b]
-                "
-              >
-                Debut Celebration
-              </p>
+              <div className="absolute bottom-[12%] left-[48%] right-[7%] top-[12%] flex flex-col items-center justify-center overflow-hidden rounded-md border border-[#c6a552]/35 bg-[#fffdf8]/80 px-2 text-center shadow-[inset_0_0_18px_rgba(198,165,82,.06)]">
+                <div className="mb-1.5 flex items-center gap-1.5">
+                  <span className="h-px w-4 bg-gradient-to-r from-transparent to-[#b48a31]" />
+                  <span className="text-[7px] text-[#b48a31]">◆</span>
+                  <span className="h-px w-4 bg-gradient-to-l from-transparent to-[#b48a31]" />
+                </div>
+                <p className="font-cinzel text-[clamp(6px,1.6cqw,8px)] uppercase leading-relaxed tracking-[.09em] text-[#8a692b]">
+                  You are cordially invited to
+                </p>
+                <p className="mt-1.5 font-vibes text-[clamp(18px,5.5cqw,26px)] leading-none text-[#8b1830]">
+                  Jamaica&apos;s
+                </p>
+                <h2 className="mt-1.5 flex flex-col font-cinzel uppercase leading-none text-[#4d3331]">
+                  <span className="text-[clamp(12px,3.6cqw,17px)] tracking-[.13em]">18th</span>
+                  <span className="mt-1 text-[clamp(7px,2.4cqw,11px)] tracking-[.16em]">Birthday</span>
+                </h2>
+                <p className="mt-2 font-cinzel text-[clamp(5px,1.45cqw,7px)] uppercase tracking-[.09em] text-[#76624d]">
+                  August 22, 2026
+                </p>
+                <div className="mt-1.5 h-px w-10 bg-gradient-to-r from-transparent via-[#b48a31]/70 to-transparent" />
+              </div>
+              <div className="pointer-events-none absolute inset-[7px] rounded-[7px] border border-[#e8cd7a]/45" />
             </div>
             </div>
 
