@@ -7,7 +7,6 @@ export default function Footer() {
       <p className="font-poppins text-[11px] tracking-[2px] uppercase mt-2.5">
         Jamaica Tyfany Julongbayan · August 22, 2026
       </p>
-      <p>© 2026 Emman & Reynan</p>
     </footer>
   );
 }

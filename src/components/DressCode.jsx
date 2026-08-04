@@ -1,41 +1,46 @@
-import { useReveal, revealClass } from '../hooks/useReveal'
+import { useReveal, revealClass } from "../hooks/useReveal";
 
 const SWATCHES = [
-  ['#D4AF37', 'Gold'],
-  ['#7A0019', 'Crimson Red'],
-  ['#121212', 'Matte Black'],
-  ['#ffffff', 'White'],
-]
+  ["#172554", "Dark Blue"],
+  ["#121212", "Black"],
+  ["#ffffff", "White"],
+  ["#6B7280", "Grey"],
+  ["#D8C3A5", "Beige"],
+];
 
 export default function DressCode() {
-  const [headerRef, headerIn] = useReveal()
-  const [cardRef, cardIn] = useReveal()
+  const [headerRef, headerIn] = useReveal();
+  const [cardRef, cardIn] = useReveal();
 
   return (
     <section id="dresscode">
       <div ref={headerRef} className={revealClass(headerIn)}>
         <div className="eyebrow">Attire</div>
         <h2 className="sec-title">
-          Dress Code<span className="font-vibes text-gold-soft text-[1.4em] block mt-1">Regal Elegance</span>
+          Dress Code
+          <span className="mt-1 block font-vibes text-[1.4em] text-gold-soft">Smart Casual</span>
         </h2>
       </div>
-      <div className={`glass-card text-center p-10 ${revealClass(cardIn)}`}>
-        <div className="flex gap-7 justify-center my-[34px] flex-wrap">
+
+      <div ref={cardRef} className={`glass-card mt-8 px-6 py-10 text-center sm:px-10 sm:py-14 ${revealClass(cardIn)}`}>
+        <p className="mx-auto max-w-2xl text-xl leading-relaxed text-beige/90">
+          Men/Women — dark blue, black, white, grey, or beige.
+        </p>
+
+        <div className="my-9 flex flex-wrap justify-center gap-5 sm:gap-8">
           {SWATCHES.map(([color, label]) => (
             <div className="text-center" key={label}>
-              <div
-                className="w-[60px] h-[60px] rounded-full mx-auto mb-2.5 border-2 border-white/15 shadow-[0_6px_20px_rgba(0,0,0,0.4)]"
-                style={{ background: color }}
-              />
-              <div className="font-poppins text-[11px] tracking-wide uppercase opacity-80">{label}</div>
+              <div className="mx-auto h-14 w-14 rounded-full border-2 border-white/20 shadow-[0_8px_24px_rgba(0,0,0,.4)] sm:h-16 sm:w-16" style={{ background: color }} />
+              <div className="mt-3 font-poppins text-[10px] uppercase tracking-[1.5px] text-beige/75">{label}</div>
             </div>
           ))}
         </div>
-        <p className="opacity-85 text-lg max-w-[520px] mx-auto">
-          Guests are kindly invited to dress in formal attire, gowns and suits are encouraged,
-          in the palette above. Let&apos;s make the evening shimmer together.
-        </p>
+
+        <div className="mx-auto max-w-xl border-t border-gold/25 pt-7">
+          <h3 className="font-cinzel text-lg text-gold-soft">Dress Code for 18 Roses</h3>
+          <p className="mt-2 text-lg text-beige/85">Black polo shirt and black pants.</p>
+        </div>
       </div>
     </section>
-  )
+  );
 }

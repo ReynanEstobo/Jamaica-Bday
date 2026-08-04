@@ -1,18 +1,22 @@
 import { useReveal, revealClass } from '../hooks/useReveal'
 
 const TIMELINE_DATA = [
-  ['3:00 PM', 'Guest Arrival'],
-  ['3:30 PM', 'Opening Prayer'],
-  ['4:00 PM', 'Grand Entrance'],
-  ['4:30 PM', '18 Roses Ceremony'],
-  ['5:15 PM', '18 Candles Ceremony'],
-  ['6:00 PM', 'Dinner'],
-  ['7:00 PM', '18 Treasures Ceremony'],
-  ['8:00 PM', 'Birthday Dance'],
-  ['9:00 PM', 'Closing Message'],
+  'Grand Entrance of Debutant',
+  'Opening Prayer',
+  '18 Perfume',
+  '18 Gifts',
+  '18 Cosmetics',
+  '18 Alfonso',
+  '18 Bills',
+  '18 Candles and Wishes',
+  '18 Roses',
+  '18 Shots',
+  'Singing Happy Birthday',
+  'Message of the Parents',
+  'Appreciation Message of the Debutant',
 ]
 
-function TimelineItem({ time, title }) {
+function TimelineItem({ title }) {
   const [ref, revealed] = useReveal()
   return (
     <div
@@ -22,8 +26,7 @@ function TimelineItem({ time, title }) {
         before:w-3 before:h-3 before:rounded-full before:bg-gold before:shadow-[0_0_12px_rgba(212,175,55,0.7)]
         ${revealClass(revealed)}`}
     >
-      <div className="font-poppins text-[11px] tracking-[2px] text-gold-soft uppercase">{time}</div>
-      <div className="font-cinzel text-xl text-white mt-1">{title}</div>
+      <div className="font-cinzel text-xl text-white">{title}</div>
     </div>
   )
 }
@@ -44,8 +47,8 @@ export default function Timeline() {
           before:content-[''] before:absolute before:left-1.5 before:top-0 before:bottom-0 before:w-px
           before:bg-gradient-to-b before:from-gold before:to-transparent"
       >
-        {TIMELINE_DATA.map(([time, title]) => (
-          <TimelineItem key={time + title} time={time} title={title} />
+        {TIMELINE_DATA.map((title) => (
+          <TimelineItem key={title} title={title} />
         ))}
       </div>
     </section>

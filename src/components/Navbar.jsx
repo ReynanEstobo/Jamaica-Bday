@@ -1,23 +1,17 @@
 import { useState } from "react";
+import { EVENT_LINKS } from "../data/eventParticipants";
 
 const LINKS = [
   ["#hero", "Home"],
   ["#invitation", "Invitation"],
   ["#about", "About"],
+  ["#dresscode", "Dress Code"],
   {
     label: "Event",
-    items: [
-      ["#roses", "18 Roses"],
-      ["#candles", "18 Candles & Wishes"],
-      ["#perfume", "18 Perfume"],
-      ["#shots", "18 Shots"],
-      ["#alfonso", "18 Alfonso"],
-      ["#gifts", "18 Gifts"],
-      ["#bills", "18 Bills"],
-      ["#cosmetics", "18 Cosmetics"],
-    ],
+    items: EVENT_LINKS,
   },
   ["#timeline", "Timeline"],
+  ["#location", "Location"],
   ["#gallery", "Gallery"],
 ];
 

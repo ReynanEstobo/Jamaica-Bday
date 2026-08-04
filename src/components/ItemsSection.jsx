@@ -1,6 +1,6 @@
 import { useReveal, revealClass } from "../hooks/useReveal";
 
-function ItemEntry({ index, roleLabel, message }) {
+function ItemEntry({ index, name, roleLabel, message, special = false }) {
   const [ref, revealed] = useReveal();
 
   return (
@@ -82,7 +82,7 @@ function ItemEntry({ index, roleLabel, message }) {
         opacity-80
         "
       >
-        {roleLabel}
+        {special ? "Special Wish" : roleLabel}
       </div>
 
       {/* NAME */}
@@ -106,7 +106,7 @@ function ItemEntry({ index, roleLabel, message }) {
         leading-tight
         "
       >
-        Placeholder Name
+        {name}
       </div>
 
       {/* MESSAGE */}
@@ -155,6 +155,8 @@ export default function ItemsSection({
   roleLabel,
 
   messages,
+
+  names,
 }) {
   const [headerRef, headerIn] = useReveal();
 
@@ -436,18 +438,14 @@ export default function ItemsSection({
           text-center
           "
         >
-          {Array.from(
-            { length: 18 },
-
-            (_, i) => i + 1,
-          )
-
-            .map((i) => (
+          {names.map((name, index) => (
               <ItemEntry
-                key={i}
-                index={i}
+                key={`${name}-${index}`}
+                index={index + 1}
+                name={name}
                 roleLabel={roleLabel}
-                message={messages[(i - 1) % messages.length]}
+                message={messages[index % messages.length]}
+                special={index >= 18}
               />
             ))}
         </div>

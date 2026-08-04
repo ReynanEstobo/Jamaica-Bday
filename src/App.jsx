@@ -8,9 +8,13 @@ import Invitation from "./components/Invitation";
 import About from "./components/About";
 import ItemsSection from "./components/ItemsSection";
 import Timeline from "./components/Timeline";
+import DressCode from "./components/DressCode";
+import Location from "./components/Location";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import EventQuickNav from "./components/EventQuickNav";
+import { EVENT_PARTICIPANTS } from "./data/eventParticipants";
 
 const ROSE_MESSAGES = [
   "A rose symbolizes admiration and respect.",
@@ -86,25 +90,7 @@ export default function App() {
 
       <About />
 
-      {/* 18 ROSES */}
-      <ItemsSection
-        id="roses"
-        eyebrow="Debut Tradition"
-        titleMain="18 Roses"
-        titleScript="Gentlemen"
-        roleLabel="Rose"
-        messages={ROSE_MESSAGES}
-      />
-
-      {/* 18 CANDLES */}
-      <ItemsSection
-        id="candles"
-        eyebrow="Debut Tradition"
-        titleMain="18 Candles & Wishes"
-        titleScript="Family & Friends"
-        roleLabel="Candle"
-        messages={CANDLE_MESSAGES}
-      />
+      <DressCode />
 
       {/* 18 PERFUME */}
       <ItemsSection
@@ -114,26 +100,7 @@ export default function App() {
         titleScript="Scents of Blessings"
         roleLabel="Perfume"
         messages={PERFUME_MESSAGES}
-      />
-
-      {/* 18 SHOTS */}
-      <ItemsSection
-        id="shots"
-        eyebrow="Debut Tradition"
-        titleMain="18 Shots"
-        titleScript="Cheers"
-        roleLabel="Shot"
-        messages={SHOTS_MESSAGES}
-      />
-
-      {/* 18 ALFONSO */}
-      <ItemsSection
-        id="alfonso"
-        eyebrow="Debut Tradition"
-        titleMain="18 Alfonso"
-        titleScript="Toast"
-        roleLabel="Bottle"
-        messages={ALFONSO_MESSAGES}
+        names={EVENT_PARTICIPANTS.perfume}
       />
 
       {/* 18 GIFTS */}
@@ -144,16 +111,7 @@ export default function App() {
         titleScript="Tokens of Love"
         roleLabel="Gift"
         messages={GIFTS_MESSAGES}
-      />
-
-      {/* 18 BILLS */}
-      <ItemsSection
-        id="bills"
-        eyebrow="Debut Tradition"
-        titleMain="18 Bills"
-        titleScript="Blessings"
-        roleLabel="Bill"
-        messages={BILLS_MESSAGES}
+        names={EVENT_PARTICIPANTS.gifts}
       />
 
       {/* 18 COSMETICS */}
@@ -164,11 +122,71 @@ export default function App() {
         titleScript="Beauty & Confidence"
         roleLabel="Cosmetic"
         messages={COSMETICS_MESSAGES}
+        names={EVENT_PARTICIPANTS.cosmetics}
+      />
+
+      {/* 18 ALFONSO */}
+      <ItemsSection
+        id="alfonso"
+        eyebrow="Debut Tradition"
+        titleMain="18 Alfonso"
+        titleScript="Toast"
+        roleLabel="Bottle"
+        messages={ALFONSO_MESSAGES}
+        names={EVENT_PARTICIPANTS.alfonso}
+      />
+
+      {/* 18 BILLS */}
+      <ItemsSection
+        id="bills"
+        eyebrow="Debut Tradition"
+        titleMain="18 Bills"
+        titleScript="Blessings"
+        roleLabel="Bill"
+        messages={BILLS_MESSAGES}
+        names={EVENT_PARTICIPANTS.bills}
+      />
+
+      {/* 18 CANDLES */}
+      <ItemsSection
+        id="candles"
+        eyebrow="Debut Tradition"
+        titleMain="18 Candles & Wishes"
+        titleScript="Family & Friends"
+        roleLabel="Candle"
+        messages={CANDLE_MESSAGES}
+        names={EVENT_PARTICIPANTS.candles}
+      />
+
+      {/* 18 ROSES */}
+      <ItemsSection
+        id="roses"
+        eyebrow="Debut Tradition"
+        titleMain="18 Roses"
+        titleScript="Gentlemen"
+        roleLabel="Rose"
+        messages={ROSE_MESSAGES}
+        names={EVENT_PARTICIPANTS.roses}
+      />
+
+      {/* 18 SHOTS */}
+      <ItemsSection
+        id="shots"
+        eyebrow="Debut Tradition"
+        titleMain="18 Shots"
+        titleScript="Cheers"
+        roleLabel="Shot"
+        messages={SHOTS_MESSAGES}
+        names={EVENT_PARTICIPANTS.shots}
       />
 
       <Timeline />
 
+      <Location />
+
       <Gallery />
+
+      <EventQuickNav />
 
       <BackToTop />
 

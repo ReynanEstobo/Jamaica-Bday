@@ -2,19 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import { useReveal, revealClass } from "../hooks/useReveal";
 
 const IMAGES = [
-  "/images/photo1.jpg",
-  "/images/photo2.jpg",
-  "/images/photo3.jpg",
-  "/images/photo4.jpg",
-  "/images/photo5.jpg",
-  "/images/photo6.jpg",
-  "/images/photo7.jpg",
-  "/images/photo8.jpg",
+  "/images/gallery/IMG_3547.JPG",
+  "/images/gallery/IMG_3446.JPG",
+  "/images/gallery/IMG_3588.JPG",
+  "/images/gallery/IMG_3433.JPG",
+  "/images/gallery/IMG_3538.JPG",
+  "/images/gallery/IMG_3440.JPG",
+  "/images/gallery/IMG_3585.JPG",
+  "/images/gallery/IMG_3475.JPG",
+  "/images/gallery/IMG_3568.JPG",
+  "/images/gallery/IMG_3479.JPG",
 ];
 
 const LOOP_IMAGES = [...IMAGES, ...IMAGES, ...IMAGES];
 
-function GalleryImage({ src, number, fullScreen = false }) {
+function GalleryImage({ src, number, fullScreen = false, featured = false }) {
   return (
     <>
       <span
@@ -31,10 +33,14 @@ function GalleryImage({ src, number, fullScreen = false }) {
       <img
         src={src}
         alt={`Gallery photo ${number}`}
+        loading={fullScreen ? "eager" : "lazy"}
+        decoding="async"
         className={
           fullScreen
             ? "relative z-10 max-h-full max-w-full select-none object-contain"
-            : "relative z-10 h-full w-full object-cover object-center"
+            : `relative z-10 h-full w-full object-cover object-center transition-transform duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)] ${
+                featured ? "scale-[1.035]" : "scale-100"
+              }`
         }
         draggable="false"
         onError={(event) => {
@@ -93,8 +99,8 @@ export default function Gallery() {
       const resetTimer = setTimeout(() => {
         setAnimate(false);
         setActive(start);
-      }, 900);
-      const animateTimer = setTimeout(() => setAnimate(true), 950);
+      }, 1450);
+      const animateTimer = setTimeout(() => setAnimate(true), 1500);
 
       return () => {
         clearTimeout(resetTimer);
@@ -103,6 +109,16 @@ export default function Gallery() {
     }
     return undefined;
   }, [active, start]);
+
+  useEffect(() => {
+    if (lightboxIndex !== null) return undefined;
+
+    const autoplay = window.setInterval(() => {
+      setActive((current) => current + 1);
+    }, 5000);
+
+    return () => window.clearInterval(autoplay);
+  }, [lightboxIndex]);
 
   useEffect(() => {
     if (lightboxIndex === null) return undefined;
@@ -148,7 +164,7 @@ export default function Gallery() {
           <div
             className={`flex items-center justify-start gap-5 ${
               animate
-                ? "transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)]"
+                ? "transform-gpu will-change-transform transition-transform duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)]"
                 : ""
             }`}
             style={{
@@ -172,12 +188,13 @@ export default function Gallery() {
                   key={index}
                   ref={index === active ? cardRef : null}
                   onClick={() => openLightbox(index)}
-                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-all duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
+                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-[transform,opacity,border-color,box-shadow,filter] duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
                   aria-label={`Open gallery photo ${(index % IMAGES.length) + 1} full screen`}
                 >
                   <GalleryImage
                     src={img}
                     number={(index % IMAGES.length) + 1}
+                    featured={distance === 0}
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                 </button>
@@ -216,11 +233,7 @@ export default function Gallery() {
                 key={img}
                 className="relative flex h-full min-w-full snap-center items-center justify-center p-4 sm:p-10"
               >
-                <GalleryImage
-                  src={img}
-                  number={index + 1}
-                  fullScreen
-                />
+                <GalleryImage src={img} number={index + 1} fullScreen />
               </div>
             ))}
           </div>
