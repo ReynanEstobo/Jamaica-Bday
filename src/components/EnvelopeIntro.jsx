@@ -4,7 +4,7 @@ export default function EnvelopeIntro({ onOpened }) {
   const [opening, setOpening] = useState(false);
   const [flapBehind, setFlapBehind] = useState(false);
   const [cardMoving, setCardMoving] = useState(false);
-  const [launching, setLaunching] = useState(false);
+  const [spinning, setSpinning] = useState(false);
   const [hidden, setHidden] = useState(false);
   const timers = useRef([]);
 
@@ -29,13 +29,13 @@ export default function EnvelopeIntro({ onOpened }) {
   // Generate particles only once
   const particles = useMemo(
     () =>
-      [...Array(14)].map((_, i) => ({
+      [...Array(28)].map((_, i) => ({
         id: i,
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
-        size: `${4 + Math.random() * 8}px`,
-        duration: `${10 + Math.random() * 8}s`,
-        delay: `${Math.random() * 6}s`,
+        size: `${4 + Math.random() * 9}px`,
+        duration: `${4 + Math.random() * 4}s`,
+        delay: `${Math.random() * 3}s`,
       })),
     [],
   );
@@ -56,10 +56,11 @@ export default function EnvelopeIntro({ onOpened }) {
       setCardMoving(true);
     }, 1340));
 
-    // Envelope transition
+    // The card finishes rising at about 2.74s. Keep it fully readable for
+    // one second, then spin and fade directly into the website.
     timers.current.push(setTimeout(() => {
-      setLaunching(true);
-    }, 2920));
+      setSpinning(true);
+    }, 3750));
 
     // Reveal website
     timers.current.push(setTimeout(() => {
@@ -74,7 +75,7 @@ export default function EnvelopeIntro({ onOpened }) {
       });
 
       onOpened?.();
-    }, 3820));
+    }, 4350));
   }
 
   return (
@@ -133,17 +134,71 @@ export default function EnvelopeIntro({ onOpened }) {
           100% { transform: translateY(-22px) scale(1.12); opacity:0; filter:blur(3px); }
         }
 
+        @keyframes envelopeTurn {
+          0% {
+            transform: perspective(1200px) rotateY(0deg) translateY(0) scale(1);
+            filter: drop-shadow(0 28px 26px rgba(0,0,0,.24));
+          }
+          100% {
+            transform: perspective(1200px) rotateY(720deg) translateY(-3px) scale(1.06);
+            filter: drop-shadow(0 28px 26px rgba(0,0,0,.18)) blur(2px);
+          }
+        }
+
+        @keyframes envelopeFade {
+          0%, 30% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+
+        @keyframes spinGlimmer {
+          0% {
+            background-position: 180% 0;
+            opacity: 0;
+            box-shadow: 0 0 0 rgba(212,175,55,0);
+          }
+          20% {
+            opacity: .72;
+          }
+          55% {
+            opacity: .95;
+            box-shadow: 0 0 34px rgba(232,205,122,.34);
+          }
+          100% {
+            background-position: -80% 0;
+            opacity: 0;
+            box-shadow: 0 0 8px rgba(212,175,55,0);
+          }
+        }
+
+        @keyframes spinStarBurst {
+          0% {
+            transform: translate(-50%,-50%) scale(.2) rotate(0deg);
+            opacity: 0;
+          }
+          18% {
+            opacity: 1;
+          }
+          100% {
+            transform: translate(calc(-50% + var(--star-x)), calc(-50% + var(--star-y))) scale(1.1) rotate(160deg);
+            opacity: 0;
+          }
+        }
+
         @keyframes cardRise {
           0% {
-            transform: translateY(30%) scale(1);
+            transform: translateY(34%) scale(.985);
             box-shadow: 0 8px 18px rgba(65,42,20,.2);
-            clip-path: inset(0 0 20% 0 round 10px);
+            clip-path: inset(0 0 32% 0 round 10px);
           }
-          24% {
+          35% {
             clip-path: inset(0 0 0 0 round 10px);
           }
           100% {
-            transform: translateY(-85%) scale(1.018);
+            transform: translateY(-72%) scale(1.01);
             box-shadow: 0 24px 45px rgba(0,0,0,.3);
             clip-path: inset(0 0 0 0 round 10px);
           }
@@ -152,6 +207,44 @@ export default function EnvelopeIntro({ onOpened }) {
         .envelope-opening { animation: envelopeRespond 1.15s cubic-bezier(.25,.7,.25,1); }
         .seal-releasing { animation: sealRelease .55s cubic-bezier(.4,0,.7,.2) forwards; }
         .intro-departing { animation: introDepart .9s cubic-bezier(.45,0,.2,1) forwards; }
+        .envelope-spinning {
+          animation:
+            envelopeTurn .52s linear both,
+            envelopeFade .52s cubic-bezier(.4,0,.2,1) both;
+          transform-style: preserve-3d;
+          will-change: transform, filter;
+        }
+        .envelope-spinning::after {
+          content: "";
+          position: absolute;
+          inset: -3%;
+          z-index: 60;
+          pointer-events: none;
+          border-radius: calc(var(--envelope-radius) + 8px);
+          background: linear-gradient(
+            108deg,
+            transparent 28%,
+            rgba(255,255,255,.18) 40%,
+            rgba(255,248,211,.92) 49%,
+            rgba(232,205,122,.65) 54%,
+            transparent 68%
+          );
+          background-size: 230% 100%;
+          mix-blend-mode: screen;
+          animation: spinGlimmer .52s linear both;
+        }
+        .spin-star {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 70;
+          pointer-events: none;
+          color: #f7df8d;
+          font-size: var(--star-size);
+          line-height: 1;
+          text-shadow: 0 0 8px rgba(255,242,181,.9), 0 0 16px rgba(212,175,55,.6);
+          animation: spinStarBurst .58s cubic-bezier(.2,.65,.25,1) var(--star-delay) both;
+        }
         .card-rising {
           animation: cardRise 1.4s cubic-bezier(.2,.72,.22,1) forwards;
           will-change: transform, box-shadow;
@@ -160,7 +253,7 @@ export default function EnvelopeIntro({ onOpened }) {
           --envelope-radius: clamp(10px, 3.4vw, 16px);
           width: min(430px, 88vw, 74dvh);
           min-width: 220px;
-          aspect-ratio: 1.55 / 1;
+          aspect-ratio: 1.75 / 1;
           container-type: inline-size;
           filter: drop-shadow(0 28px 26px rgba(0,0,0,.24));
         }
@@ -176,7 +269,7 @@ export default function EnvelopeIntro({ onOpened }) {
         .envelope-flap {
           inset-inline: 0;
           width: 100%;
-          height: 55%;
+          height: 62%;
           transform-box: border-box;
           transform-origin: 50% 0%;
           clip-path: polygon(0 0, 100% 0, 50% 100%);
@@ -185,7 +278,7 @@ export default function EnvelopeIntro({ onOpened }) {
         }
 
         .envelope-pocket {
-          height: 62%;
+          height: 56%;
           border-radius: 0 0 var(--envelope-radius) var(--envelope-radius);
           clip-path: polygon(0 0, 50% 35%, 100% 0, 100% 100%, 0 100%);
           -webkit-clip-path: polygon(0 0, 50% 35%, 100% 0, 100% 100%, 0 100%);
@@ -241,7 +334,7 @@ export default function EnvelopeIntro({ onOpened }) {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .envelope-opening, .seal-releasing, .intro-departing { animation-duration: 1ms; }
+          .envelope-opening, .seal-releasing, .envelope-spinning, .envelope-spinning::after, .spin-star, .intro-departing { animation-duration: 1ms; }
         }
 
 
@@ -260,6 +353,10 @@ export default function EnvelopeIntro({ onOpened }) {
           floatParticle
           linear
           infinite;
+
+          box-shadow:
+          0 0 9px rgba(255,241,174,.8),
+          0 0 18px rgba(212,175,55,.45);
         }
       `}</style>
       <div
@@ -368,10 +465,37 @@ export default function EnvelopeIntro({ onOpened }) {
           relative
 
           ${opening ? "envelope-opening" : ""}
-          ${launching ? "intro-departing" : ""}
+          ${spinning ? "envelope-spinning" : ""}
           `}
         >
           <div className="absolute -bottom-[12%] left-[8%] h-[16%] w-[84%] rounded-full bg-black/45 blur-xl transition-all duration-1000" />
+
+          {spinning && [
+            ["-190px", "-105px", "17px", "0ms"],
+            ["-120px", "-155px", "11px", "35ms"],
+            ["-30px", "-175px", "15px", "10ms"],
+            ["85px", "-155px", "12px", "55ms"],
+            ["175px", "-95px", "18px", "20ms"],
+            ["205px", "20px", "10px", "65ms"],
+            ["145px", "115px", "15px", "30ms"],
+            ["35px", "150px", "11px", "70ms"],
+            ["-90px", "145px", "17px", "15ms"],
+            ["-190px", "75px", "12px", "50ms"],
+          ].map(([x, y, size, delay], index) => (
+            <span
+              key={index}
+              className="spin-star"
+              style={{
+                "--star-x": x,
+                "--star-y": y,
+                "--star-size": size,
+                "--star-delay": delay,
+              }}
+              aria-hidden="true"
+            >
+              ✦
+            </span>
+          ))}
 
           {/* Envelope Base */}
 
@@ -432,21 +556,21 @@ export default function EnvelopeIntro({ onOpened }) {
 
             {/* Invitation Card */}
 
-            <div className="absolute inset-0 z-[15] overflow-visible rounded-2xl">
+            <div className={`absolute inset-0 z-[15] rounded-2xl ${cardMoving ? "overflow-visible" : "overflow-hidden"}`}>
             <div
               className={`invitation-card
               absolute
 
 
-              left-[7%]
+              left-[6%]
 
-              right-[7%]
-
-
-              top-[18%]
+              right-[6%]
 
 
-              bottom-[8%]
+              top-[14%]
+
+
+              bottom-[7%]
 
 
               rounded-[9px]
@@ -486,7 +610,7 @@ export default function EnvelopeIntro({ onOpened }) {
               ${
                 cardMoving
                   ? "card-rising"
-                  : "translate-y-[30%] [clip-path:inset(0_0_20%_0_round_10px)]"
+                  : "translate-y-[34%] scale-[.985] [clip-path:inset(0_0_32%_0_round_10px)]"
               }
 
               `}
@@ -629,7 +753,7 @@ export default function EnvelopeIntro({ onOpened }) {
               left-1/2
 
 
-              top-[55%]
+              top-[61%]
 
 
               -translate-x-1/2
