@@ -9,8 +9,9 @@ export default function About() {
       <div className="grid grid-cols-[1fr_1.2fr] max-[800px]:grid-cols-1 gap-[60px] items-center">
         <div
           ref={portraitRef}
-          className={`relative aspect-[2/3] w-full max-w-[520px] justify-self-center rounded-2xl overflow-hidden
+          className={`relative aspect-[3/4] rounded-2xl overflow-hidden
             bg-gradient-to-br from-crimson/50 to-ink/90 border border-gold/35
+            flex items-center justify-center font-cinzel text-gold-soft text-sm tracking-[2px]
             before:content-[''] before:absolute before:inset-0
             before:bg-[radial-gradient(circle_at_30%_20%,rgba(212,175,55,0.25),transparent_60%)]
             ${revealClass(portraitIn)}`}
@@ -22,8 +23,7 @@ export default function About() {
             height="1536"
             loading="lazy"
             decoding="async"
-            sizes="(max-width: 800px) calc(100vw - 48px), min(42vw, 520px)"
-            className="h-full w-full object-cover [image-rendering:auto]"
+            className="h-full w-full object-contain object-bottom [image-rendering:auto]"
           />
         </div>
         <div ref={textRef} className={revealClass(textIn)}>
