@@ -41,6 +41,13 @@ export function createAudioEngine() {
     isPlaying = false;
   }
 
+  function pause() {
+    if (!audio) return;
+
+    audio.pause();
+    isPlaying = false;
+  }
+
   function setVolume() {
     // Ignore volume changes
     // Music is always max volume
@@ -57,6 +64,7 @@ export function createAudioEngine() {
   return {
     init,
     start,
+    pause,
     stop,
     setVolume,
     getIsPlaying,

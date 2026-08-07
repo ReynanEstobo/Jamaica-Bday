@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="px-[6%] pb-32 pt-[60px] text-center sm:pb-28">
+    <footer className="px-[6%] pb-10 pt-[60px] text-center">
       <div className="font-vibes text-2xl text-gold-soft">
         See you there, with love
       </div>
@@ -10,7 +10,7 @@ export default function Footer() {
 
       <div className="mx-auto mt-8 max-w-md border-t border-gold/20 pt-6">
         <p className="font-poppins text-xs tracking-wide text-beige/70">
-          Want an invitation like this?{" "}
+          Want this kind of invitation?{" "}
           <a
             href="https://www.facebook.com/beysik.111304"
             target="_blank"
@@ -21,6 +21,6 @@ export default function Footer() {
           </a>
         </p>
       </div>
-    </footer>
+    l</footer>
   );
 }

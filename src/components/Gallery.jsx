@@ -57,6 +57,9 @@ export default function Gallery() {
   const [active, setActive] = useState(start);
   const [animate, setAnimate] = useState(true);
   const [offset, setOffset] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [autoplayReset, setAutoplayReset] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const cardRef = useRef(null);
   const containerRef = useRef(null);
@@ -78,14 +81,29 @@ export default function Gallery() {
 
   function handleTouchStart(event) {
     touchStartX.current = event.touches[0].clientX;
+    setIsDragging(true);
+    setDragOffset(0);
+    setAutoplayReset((reset) => reset + 1);
+  }
+
+  function handleTouchMove(event) {
+    const distance = event.touches[0].clientX - touchStartX.current;
+    setDragOffset(distance);
   }
 
   function handleTouchEnd(event) {
     const distance = event.changedTouches[0].clientX - touchStartX.current;
+    setIsDragging(false);
+    setDragOffset(0);
     if (Math.abs(distance) < 45) return;
 
     suppressClickUntil.current = Date.now() + 350;
     setActive((current) => current + (distance < 0 ? 1 : -1));
+  }
+
+  function handleTouchCancel() {
+    setIsDragging(false);
+    setDragOffset(0);
   }
 
   useEffect(() => {
@@ -99,8 +117,8 @@ export default function Gallery() {
       const resetTimer = setTimeout(() => {
         setAnimate(false);
         setActive(start);
-      }, 1450);
-      const animateTimer = setTimeout(() => setAnimate(true), 1500);
+      }, 925);
+      const animateTimer = setTimeout(() => setAnimate(true), 950);
 
       return () => {
         clearTimeout(resetTimer);
@@ -111,14 +129,14 @@ export default function Gallery() {
   }, [active, start]);
 
   useEffect(() => {
-    if (lightboxIndex !== null) return undefined;
+    if (lightboxIndex !== null || isDragging) return undefined;
 
-    const autoplay = window.setInterval(() => {
+    const autoplay = window.setTimeout(() => {
       setActive((current) => current + 1);
-    }, 5000);
+    }, 3000);
 
-    return () => window.clearInterval(autoplay);
-  }, [lightboxIndex]);
+    return () => window.clearTimeout(autoplay);
+  }, [active, autoplayReset, isDragging, lightboxIndex]);
 
   useEffect(() => {
     if (lightboxIndex === null) return undefined;
@@ -158,17 +176,19 @@ export default function Gallery() {
         <div
           ref={containerRef}
           onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchCancel}
           className="relative w-full touch-pan-y overflow-hidden py-8 sm:py-10"
         >
           <div
             className={`flex items-center justify-start gap-5 ${
-              animate
-                ? "transform-gpu will-change-transform transition-transform duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)]"
+              animate && !isDragging
+                ? "transform-gpu will-change-transform transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)]"
                 : ""
             }`}
             style={{
-              transform: `translateX(${offset - active * (cardRef.current?.offsetWidth + 20 || 0)}px)`,
+              transform: `translate3d(${offset - active * (cardRef.current?.offsetWidth + 20 || 0) + dragOffset}px, 0, 0)`,
             }}
           >
             {LOOP_IMAGES.map((img, index) => {
@@ -188,7 +208,7 @@ export default function Gallery() {
                   key={index}
                   ref={index === active ? cardRef : null}
                   onClick={() => openLightbox(index)}
-                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-[transform,opacity,border-color,box-shadow,filter] duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
+                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-[transform,opacity,border-color,box-shadow,filter] duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
                   aria-label={`Open gallery photo ${(index % IMAGES.length) + 1} full screen`}
                 >
                   <GalleryImage
