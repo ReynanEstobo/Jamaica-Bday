@@ -140,7 +140,7 @@ export const EVENT_PARTICIPANTS = {
     "Ninong Dennis Bautista",
     "Ninang Marie Carbayar",
     "Kuya Leo Calbayar",
-    "Ate Aiza Calbayar",
+    "Ate Aiza ",
   ],
   cosmetics: [
     "Precious Angel Vidal",

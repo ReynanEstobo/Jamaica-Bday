@@ -139,8 +139,8 @@ export const EVENT_PARTICIPANTS = {
     "Tito Jayvee Julongbayan",
     "Ninong Dennis Bautista",
     "Ninang Marie Carbayar",
-    "Kuya Leo Calbayar",
-    "Ate Aiza Calbayar",
+    "Kuya Leo Carbayar",
+    " ",
   ],
   cosmetics: [
     "Precious Angel Vidal",
