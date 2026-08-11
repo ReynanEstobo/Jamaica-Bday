@@ -96,6 +96,12 @@ export default function ImagePreloader({ children }) {
         {failed.length ? `${failed.length} photo${failed.length === 1 ? "" : "s"} unavailable` : `${progress}%`}
       </p>
 
+      {!failed.length && (
+        <p className="mt-5 max-w-sm font-poppins text-[10px] leading-relaxed tracking-wide text-white/45 sm:text-[11px]">
+          The first visit may take a little while as we prepare the essential photos. Refreshes in this tab will be much faster.
+        </p>
+      )}
+
       {failed.length > 0 && (
         <button className="gold-btn" type="button" onClick={() => setAttempt((value) => value + 1)}>
           Retry Photos
