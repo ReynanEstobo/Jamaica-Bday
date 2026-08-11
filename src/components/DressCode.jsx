@@ -2,7 +2,6 @@ import { useReveal, revealClass } from "../hooks/useReveal";
 
 const SWATCHES = [
   ["#172554", "Dark Blue"],
-  ["#121212", "Black"],
   ["#ffffff", "White"],
   ["#6B7280", "Grey"],
   ["#D8C3A5", "Beige"],
@@ -30,7 +29,7 @@ export default function DressCode() {
 
       <div ref={cardRef} className={`glass-card mt-8 px-6 py-10 text-center sm:px-10 sm:py-14 ${revealClass(cardIn)}`}>
         <p className="mx-auto max-w-2xl text-xl leading-relaxed text-beige/90">
-          Men/Women — dark blue, black, white, grey, or beige.
+          Men/Women — dark blue, white, grey, or beige.
         </p>
 
         <div className="my-9 flex flex-wrap justify-center gap-5 sm:gap-8">
