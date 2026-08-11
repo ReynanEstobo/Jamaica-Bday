@@ -1,18 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useReveal, revealClass } from "../hooks/useReveal";
-
-const IMAGES = [
-  "/images/gallery/IMG_3547.JPG",
-  "/images/gallery/IMG_3446.JPG",
-  "/images/gallery/IMG_3588.JPG",
-  "/images/gallery/IMG_3433.JPG",
-  "/images/gallery/IMG_3538.JPG",
-  "/images/gallery/IMG_3440.JPG",
-  "/images/gallery/IMG_3585.JPG",
-  "/images/gallery/IMG_3475.JPG",
-  "/images/gallery/IMG_3568.JPG",
-  "/images/gallery/IMG_3479.JPG",
-];
+import { GALLERY_IMAGES as IMAGES } from "../data/siteImages";
 
 const LOOP_IMAGES = [...IMAGES, ...IMAGES, ...IMAGES];
 

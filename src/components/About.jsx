@@ -1,6 +1,6 @@
 ﻿import { useReveal, revealClass } from "../hooks/useReveal";
 
-import celebrantPortrait from "../assets/images/celebrant-portrait.png";
+import { CELEBRANT_PORTRAIT } from "../data/siteImages";
 
 export default function About() {
   const [portraitRef, portraitIn] = useReveal();
@@ -18,7 +18,7 @@ export default function About() {
             ${revealClass(portraitIn)}`}
         >
           <img
-            src={celebrantPortrait}
+            src={CELEBRANT_PORTRAIT}
             alt="Jamaica Tyfany Julongbayan, the celebrant"
             width="1024"
             height="1536"
