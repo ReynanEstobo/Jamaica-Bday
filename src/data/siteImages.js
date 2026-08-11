@@ -19,5 +19,4 @@ export const SITE_IMAGES = [
   "/images/envelope-family.JPG",
   "/images/hero-newspaper.JPG",
   CELEBRANT_PORTRAIT,
-  ...GALLERY_IMAGES,
 ];

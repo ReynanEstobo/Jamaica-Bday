@@ -41,7 +41,7 @@ const MusicPlayer = forwardRef(function MusicPlayer({ show, autoStart }, ref) {
   function revealTitle() {
     window.clearTimeout(titleTimerRef.current);
     setShowTitle(true);
-    titleTimerRef.current = window.setTimeout(() => setShowTitle(false), 8000);
+    titleTimerRef.current = window.setTimeout(() => setShowTitle(false), 4000);
   }
 
   async function startPlayback() {

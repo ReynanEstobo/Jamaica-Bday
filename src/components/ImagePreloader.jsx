@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SITE_IMAGES } from "../data/siteImages";
 
-const SESSION_CACHE_KEY = "jamaica-invitation-images-ready-v1";
+const SESSION_CACHE_KEY = "jamaica-invitation-critical-images-ready-v2";
 
 function hasCompletedThisSession() {
   try {
