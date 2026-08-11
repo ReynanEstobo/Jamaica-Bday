@@ -125,7 +125,7 @@ export const EVENT_PARTICIPANTS = {
     "Ninang Monette Castillo",
     "Ninong Gerome Baylosis",
     "Ninang Montesa Carbayar",
-    "Kuya Leo Calbayar & Ate Aiza Calbayar",
+    "Kuya Leo Calbayar & Ate ",
     "Ninang Jc Galura",
     "Ninang Dorina Sistona",
     "Ninang Net Julongbayan",
