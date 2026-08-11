@@ -4,7 +4,9 @@ import { createAudioEngine } from "../utils/audio";
 export default function MusicPlayer({ show, autoStart }) {
   const engineRef = useRef(null);
   const startedRef = useRef(false);
+  const titleTimerRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
 
   useEffect(() => {
     engineRef.current = createAudioEngine(1);
@@ -26,9 +28,23 @@ export default function MusicPlayer({ show, autoStart }) {
     startMusic();
   }, [autoStart]);
 
+  useEffect(() => {
+    if (!show) return undefined;
+
+    revealTitle();
+    return () => window.clearTimeout(titleTimerRef.current);
+  }, [show]);
+
+  function revealTitle() {
+    window.clearTimeout(titleTimerRef.current);
+    setShowTitle(true);
+    titleTimerRef.current = window.setTimeout(() => setShowTitle(false), 8000);
+  }
+
   async function toggle() {
     if (!engineRef.current) return;
     engineRef.current.init();
+    revealTitle();
 
     if (engineRef.current.getIsPlaying()) {
       engineRef.current.pause();
@@ -42,12 +58,32 @@ export default function MusicPlayer({ show, autoStart }) {
 
   return (
     <div
-      className={`fixed bottom-5 right-4 z-[150] transition-all duration-500 sm:bottom-6 sm:right-6 ${
+      className={`fixed bottom-5 right-4 z-[150] flex items-center gap-2 transition-all duration-500 sm:bottom-6 sm:right-6 ${
         show
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-5 opacity-0"
       }`}
     >
+      <div
+        role="status"
+        aria-live="polite"
+        className={`min-w-0 overflow-hidden rounded-xl border border-gold/30 bg-[#16080b]/90 shadow-[0_12px_35px_rgba(0,0,0,.45)] backdrop-blur-xl transition-all duration-500 ${
+          showTitle
+            ? "w-[230px] translate-x-0 px-4 py-3 opacity-100 sm:w-[270px]"
+            : "pointer-events-none w-0 translate-x-4 px-0 py-3 opacity-0"
+        }`}
+      >
+        <p className="whitespace-nowrap font-poppins text-[8px] uppercase tracking-[2.5px] text-gold-soft/65">
+          Now Playing
+        </p>
+        <p className="mt-1 whitespace-nowrap font-cinzel text-sm text-white sm:text-base">
+          A Whole New World
+        </p>
+        <p className="mt-0.5 whitespace-nowrap font-poppins text-[9px] text-white/55 sm:text-[10px]">
+          Violin Cover by Daniel Jang
+        </p>
+      </div>
+
       <button
         type="button"
         onClick={toggle}
