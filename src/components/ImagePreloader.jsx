@@ -1,6 +1,24 @@
 import { useEffect, useState } from "react";
 import { SITE_IMAGES } from "../data/siteImages";
 
+const SESSION_CACHE_KEY = "jamaica-invitation-images-ready-v1";
+
+function hasCompletedThisSession() {
+  try {
+    return window.sessionStorage.getItem(SESSION_CACHE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function rememberCompletedSession() {
+  try {
+    window.sessionStorage.setItem(SESSION_CACHE_KEY, "true");
+  } catch {
+    // Preloading still works when session storage is unavailable.
+  }
+}
+
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -16,12 +34,15 @@ function loadImage(src) {
 }
 
 export default function ImagePreloader({ children }) {
+  const [sessionReady] = useState(hasCompletedThisSession);
   const [attempt, setAttempt] = useState(0);
   const [loaded, setLoaded] = useState(0);
   const [failed, setFailed] = useState([]);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(sessionReady);
 
   useEffect(() => {
+    if (sessionReady && attempt === 0) return undefined;
+
     let active = true;
     let completed = 0;
 
@@ -45,12 +66,13 @@ export default function ImagePreloader({ children }) {
 
       setFailed(failures);
       setReady(failures.length === 0);
+      if (failures.length === 0) rememberCompletedSession();
     });
 
     return () => {
       active = false;
     };
-  }, [attempt]);
+  }, [attempt, sessionReady]);
 
   if (ready) return children;
 
@@ -82,4 +104,3 @@ export default function ImagePreloader({ children }) {
     </div>
   );
 }
-
