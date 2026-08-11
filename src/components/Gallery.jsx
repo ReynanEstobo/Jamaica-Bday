@@ -54,6 +54,7 @@ export default function Gallery() {
   const lightboxRef = useRef(null);
   const touchStartX = useRef(0);
   const suppressClickUntil = useRef(0);
+  const releaseFrameRef = useRef(null);
 
   function updatePosition() {
     if (!cardRef.current || !containerRef.current) return;
@@ -82,11 +83,16 @@ export default function Gallery() {
   function handleTouchEnd(event) {
     const distance = event.changedTouches[0].clientX - touchStartX.current;
     setIsDragging(false);
-    setDragOffset(0);
-    if (Math.abs(distance) < 45) return;
+    setDragOffset(distance);
 
-    suppressClickUntil.current = Date.now() + 350;
-    setActive((current) => current + (distance < 0 ? 1 : -1));
+    releaseFrameRef.current = requestAnimationFrame(() => {
+      setDragOffset(0);
+
+      if (Math.abs(distance) < 45) return;
+
+      suppressClickUntil.current = Date.now() + 350;
+      setActive((current) => current + (distance < 0 ? 1 : -1));
+    });
   }
 
   function handleTouchCancel() {
@@ -97,7 +103,10 @@ export default function Gallery() {
   useEffect(() => {
     updatePosition();
     window.addEventListener("resize", updatePosition);
-    return () => window.removeEventListener("resize", updatePosition);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      cancelAnimationFrame(releaseFrameRef.current);
+    };
   }, []);
 
   useEffect(() => {
