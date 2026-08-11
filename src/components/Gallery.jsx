@@ -105,8 +105,8 @@ export default function Gallery() {
       const resetTimer = setTimeout(() => {
         setAnimate(false);
         setActive(start);
-      }, 925);
-      const animateTimer = setTimeout(() => setAnimate(true), 950);
+      }, 1225);
+      const animateTimer = setTimeout(() => setAnimate(true), 1250);
 
       return () => {
         clearTimeout(resetTimer);
@@ -172,7 +172,7 @@ export default function Gallery() {
           <div
             className={`flex items-center justify-start gap-5 ${
               animate && !isDragging
-                ? "transform-gpu will-change-transform transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)]"
+                ? "transform-gpu will-change-transform transition-transform duration-[1200ms] ease-[cubic-bezier(.45,0,.2,1)]"
                 : ""
             }`}
             style={{
@@ -196,7 +196,7 @@ export default function Gallery() {
                   key={index}
                   ref={index === active ? cardRef : null}
                   onClick={() => openLightbox(index)}
-                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-[transform,opacity,border-color,box-shadow,filter] duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
+                  className={`relative h-[250px] w-[180px] flex-none cursor-pointer overflow-hidden rounded-3xl border p-0 transition-[transform,opacity,border-color,box-shadow,filter] duration-[1200ms] ease-[cubic-bezier(.45,0,.2,1)] sm:h-[350px] sm:w-[260px] ${emphasis}`}
                   aria-label={`Open gallery photo ${(index % IMAGES.length) + 1} full screen`}
                 >
                   <GalleryImage
