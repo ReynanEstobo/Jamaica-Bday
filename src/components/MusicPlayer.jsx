@@ -44,15 +44,17 @@ export default function MusicPlayer({ show, autoStart }) {
   async function toggle() {
     if (!engineRef.current) return;
     engineRef.current.init();
-    revealTitle();
 
     if (engineRef.current.getIsPlaying()) {
       engineRef.current.pause();
       setPlaying(false);
+      window.clearTimeout(titleTimerRef.current);
+      setShowTitle(false);
     } else {
       await engineRef.current.start();
       engineRef.current.setVolume(1);
       setPlaying(true);
+      revealTitle();
     }
   }
 

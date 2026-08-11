@@ -6,6 +6,7 @@ export default function EnvelopeIntro({ onOpened }) {
   const [cardMoving, setCardMoving] = useState(false);
   const [spinning, setSpinning] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [showSealPrompt, setShowSealPrompt] = useState(false);
   const timers = useRef([]);
 
   // Lock scrolling while envelope intro is active
@@ -25,6 +26,11 @@ export default function EnvelopeIntro({ onOpened }) {
     () => () => timers.current.forEach((timer) => clearTimeout(timer)),
     [],
   );
+
+  useEffect(() => {
+    const promptTimer = window.setTimeout(() => setShowSealPrompt(true), 3000);
+    return () => window.clearTimeout(promptTimer);
+  }, []);
 
   // Generate particles only once
   const particles = useMemo(
@@ -186,6 +192,22 @@ export default function EnvelopeIntro({ onOpened }) {
             transform: translate(calc(-50% + var(--star-x)), calc(-50% + var(--star-y))) scale(1.1) rotate(160deg);
             opacity: 0;
           }
+        }
+
+        @keyframes sealPointerBounce {
+          0%, 100% { transform: translate(-50%, 0); }
+          50% { transform: translate(-50%, 6px); }
+        }
+
+        @keyframes sealPromptFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .seal-pointer {
+          animation:
+            sealPromptFadeIn .9s ease-out both,
+            sealPointerBounce 1.15s ease-in-out .9s infinite;
         }
 
         @keyframes cardRise {
@@ -742,6 +764,28 @@ export default function EnvelopeIntro({ onOpened }) {
             </div>
 
             {/* Wax Seal */}
+
+            {showSealPrompt && !opening && (
+              <div
+                aria-hidden="true"
+                className="seal-pointer pointer-events-none absolute left-1/2 top-[27%] z-40 flex -translate-x-1/2 select-none flex-col items-center [-webkit-tap-highlight-color:transparent]"
+              >
+                <span className="whitespace-nowrap rounded-full border border-[#d9bd69]/45 bg-[#21090e]/75 px-3.5 py-1.5 font-poppins text-[8px] font-semibold uppercase tracking-[2px] text-[#f2d77f]/90 shadow-[0_5px_14px_rgba(0,0,0,.28)] backdrop-blur-sm sm:text-[9px]">
+                  Click here to open
+                </span>
+                <svg
+                  viewBox="0 0 24 34"
+                  className="h-[30px] w-[21px] text-[#c89525] drop-shadow-[0_2px_3px_rgba(67,36,10,.65)]"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 3v25M5.5 21.5 12 28l6.5-6.5" />
+                </svg>
+              </div>
+            )}
 
             <button
               onClick={handleOpen}
