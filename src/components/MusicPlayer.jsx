@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { createAudioEngine } from "../utils/audio";
 
-export default function MusicPlayer({ show, autoStart }) {
+const MusicPlayer = forwardRef(function MusicPlayer({ show, autoStart }, ref) {
   const engineRef = useRef(null);
   const startedRef = useRef(false);
   const titleTimerRef = useRef(null);
@@ -34,11 +34,27 @@ export default function MusicPlayer({ show, autoStart }) {
     [],
   );
 
+  useEffect(() => {
+    if (show && playing) revealTitle();
+  }, [show, playing]);
+
   function revealTitle() {
     window.clearTimeout(titleTimerRef.current);
     setShowTitle(true);
     titleTimerRef.current = window.setTimeout(() => setShowTitle(false), 8000);
   }
+
+  async function startPlayback() {
+    if (!engineRef.current) return false;
+
+    const didStart = await engineRef.current.start();
+    engineRef.current.setVolume(1);
+    startedRef.current = didStart;
+    setPlaying(didStart);
+    return didStart;
+  }
+
+  useImperativeHandle(ref, () => ({ start: startPlayback }));
 
   async function toggle() {
     if (!engineRef.current) return;
@@ -50,10 +66,7 @@ export default function MusicPlayer({ show, autoStart }) {
       window.clearTimeout(titleTimerRef.current);
       setShowTitle(false);
     } else {
-      const didStart = await engineRef.current.start();
-      engineRef.current.setVolume(1);
-      setPlaying(didStart);
-      if (didStart) revealTitle();
+      await startPlayback();
     }
   }
 
@@ -115,4 +128,6 @@ export default function MusicPlayer({ show, autoStart }) {
       </button>
     </div>
   );
-}
+});
+
+export default MusicPlayer;

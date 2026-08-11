@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export default function EnvelopeIntro({ onOpened }) {
+export default function EnvelopeIntro({ onOpening, onOpened }) {
   const [opening, setOpening] = useState(false);
   const [flapBehind, setFlapBehind] = useState(false);
   const [cardMoving, setCardMoving] = useState(false);
@@ -51,6 +51,7 @@ export default function EnvelopeIntro({ onOpened }) {
 
     // Start opening
     setOpening(true);
+    onOpening?.();
 
     // Change the flap's depth only after it passes the 90-degree midpoint.
     timers.current.push(setTimeout(() => {

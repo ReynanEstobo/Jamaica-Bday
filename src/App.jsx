@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Particles from "./components/Particles";
 import EnvelopeIntro from "./components/EnvelopeIntro";
 import MusicPlayer from "./components/MusicPlayer";
@@ -66,6 +66,7 @@ const COSMETICS_MESSAGES = [
 
 export default function App() {
   const [opened, setOpened] = useState(false);
+  const musicPlayerRef = useRef(null);
 
   return (
     <>
@@ -79,8 +80,11 @@ export default function App() {
 
       <Particles />
 
-      <EnvelopeIntro onOpened={() => setOpened(true)} />
-      <MusicPlayer show={opened} autoStart={opened} />
+      <EnvelopeIntro
+        onOpening={() => musicPlayerRef.current?.start()}
+        onOpened={() => setOpened(true)}
+      />
+      <MusicPlayer ref={musicPlayerRef} show={opened} autoStart={opened} />
 
       <Navbar />
 
