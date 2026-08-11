@@ -19,21 +19,20 @@ export default function MusicPlayer({ show, autoStart }) {
     async function startMusic() {
       if (autoStart && !startedRef.current && engineRef.current) {
         startedRef.current = true;
-        await engineRef.current.start();
+        const didStart = await engineRef.current.start();
         engineRef.current.setVolume(1);
-        setPlaying(true);
+        setPlaying(didStart);
+        if (didStart) revealTitle();
       }
     }
 
     startMusic();
   }, [autoStart]);
 
-  useEffect(() => {
-    if (!show) return undefined;
-
-    revealTitle();
-    return () => window.clearTimeout(titleTimerRef.current);
-  }, [show]);
+  useEffect(
+    () => () => window.clearTimeout(titleTimerRef.current),
+    [],
+  );
 
   function revealTitle() {
     window.clearTimeout(titleTimerRef.current);
@@ -51,16 +50,16 @@ export default function MusicPlayer({ show, autoStart }) {
       window.clearTimeout(titleTimerRef.current);
       setShowTitle(false);
     } else {
-      await engineRef.current.start();
+      const didStart = await engineRef.current.start();
       engineRef.current.setVolume(1);
-      setPlaying(true);
-      revealTitle();
+      setPlaying(didStart);
+      if (didStart) revealTitle();
     }
   }
 
   return (
     <div
-      className={`fixed bottom-5 right-4 z-[150] flex items-center gap-2 transition-all duration-500 sm:bottom-6 sm:right-6 ${
+      className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[150] flex items-center gap-2 transition-all duration-500 sm:bottom-6 sm:right-6 ${
         show
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-5 opacity-0"
@@ -69,10 +68,10 @@ export default function MusicPlayer({ show, autoStart }) {
       <div
         role="status"
         aria-live="polite"
-        className={`min-w-0 overflow-hidden rounded-xl border border-gold/30 bg-[#16080b]/90 shadow-[0_12px_35px_rgba(0,0,0,.45)] backdrop-blur-xl transition-all duration-500 ${
+        className={`absolute bottom-14 right-0 min-w-0 overflow-hidden rounded-xl border border-gold/30 bg-[#16080b]/95 shadow-[0_12px_35px_rgba(0,0,0,.45)] backdrop-blur-xl transition-all duration-500 sm:relative sm:bottom-auto sm:right-auto ${
           showTitle
-            ? "w-[230px] translate-x-0 px-4 py-3 opacity-100 sm:w-[270px]"
-            : "pointer-events-none w-0 translate-x-4 px-0 py-3 opacity-0"
+            ? "w-[min(270px,calc(100vw-2rem))] translate-y-0 px-4 py-3 opacity-100 sm:w-[270px] sm:translate-x-0"
+            : "pointer-events-none w-0 translate-y-3 px-0 py-3 opacity-0 sm:translate-x-4 sm:translate-y-0"
         }`}
       >
         <p className="whitespace-nowrap font-poppins text-[8px] uppercase tracking-[2.5px] text-gold-soft/65">

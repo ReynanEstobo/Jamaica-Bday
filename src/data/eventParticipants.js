@@ -14,7 +14,7 @@ export const EVENT_PARTICIPANTS = {
     "Kuya Brian Caisip",
     "Tito John Rovic Magahis",
     "Kuya Jestmer Magahis",
-    "Emman De Castro",
+    "Emman Decastro",
     "Lolo Danny Julongbayan",
     "Mamay Martin Carbayar",
     "Papa Jerwin Julongbayan",

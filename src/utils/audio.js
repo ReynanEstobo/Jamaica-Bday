@@ -26,8 +26,11 @@ export function createAudioEngine() {
       await audio.play();
 
       isPlaying = true;
+      return true;
     } catch (error) {
       console.error("Audio playback failed:", error);
+      isPlaying = false;
+      return false;
     }
   }
 

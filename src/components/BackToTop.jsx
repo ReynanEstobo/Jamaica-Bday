@@ -24,7 +24,9 @@ export default function BackToTop() {
 
   return (
     <button
+      type="button"
       onClick={scrollTop}
+      aria-label="Back to top"
       className={`
       fixed
 

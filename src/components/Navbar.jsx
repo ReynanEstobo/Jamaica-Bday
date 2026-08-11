@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EVENT_LINKS } from "../data/eventParticipants";
 
 const LINKS = [
@@ -17,6 +17,23 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
 
   return (
     <nav
@@ -139,6 +156,15 @@ export default function Navbar() {
 
       {/* NAVIGATION */}
 
+      {open && (
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-[199] hidden bg-black/55 backdrop-blur-[2px] max-[900px]:block"
+        />
+      )}
+
       <ul
         className={`
         flex
@@ -157,6 +183,8 @@ export default function Navbar() {
 
         max-[900px]:h-screen
 
+        max-[900px]:h-dvh
+
         max-[900px]:w-[74%]
 
 
@@ -174,6 +202,12 @@ export default function Navbar() {
 
         max-[900px]:pl-10
 
+        max-[900px]:pr-6
+
+        max-[900px]:py-24
+
+        max-[900px]:overflow-y-auto
+
         max-[900px]:gap-7
 
 
@@ -182,7 +216,9 @@ export default function Navbar() {
         max-[900px]:duration-500
 
 
-        ${open ? "max-[900px]:translate-x-0" : "max-[900px]:translate-x-full"}
+        max-[900px]:z-[205]
+
+        ${open ? "max-[900px]:translate-x-0" : "max-[900px]:invisible max-[900px]:translate-x-full"}
         `}
       >
         {LINKS.map((item) => {
@@ -261,6 +297,8 @@ export default function Navbar() {
                 "
               >
                 <button
+                  type="button"
+                  aria-haspopup="true"
                   className="
                   flex
 
@@ -333,10 +371,16 @@ export default function Navbar() {
 
                   group-hover:visible
 
+                  group-focus-within:visible
+
                   group-hover:opacity-100
+
+                  group-focus-within:opacity-100
 
 
                   group-hover:translate-y-0
+
+                  group-focus-within:translate-y-0
 
 
                   transition-all
@@ -462,8 +506,10 @@ export default function Navbar() {
       =================================== */}
 
       <button
+        type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-label="Toggle navigation"
+        aria-expanded={open}
         className="
           hidden
 

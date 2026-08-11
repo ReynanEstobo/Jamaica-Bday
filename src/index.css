@@ -5,12 +5,23 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+  }
+  body {
+    min-width: 280px;
+  }
+  button, a, input, select, textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    @apply outline-none ring-2 ring-gold/80 ring-offset-2 ring-offset-ink;
   }
   h1, h2, h3 {
     @apply font-cinzel tracking-[0.04em];
   }
   section {
     @apply relative mx-auto max-w-[1300px] px-[6%];
+    scroll-margin-top: 84px;
     padding-top: clamp(64px, 7vw, 92px);
     padding-bottom: clamp(64px, 7vw, 92px);
   }
