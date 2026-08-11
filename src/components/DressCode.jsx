@@ -38,7 +38,7 @@ export default function DressCode() {
 
         <div className="mx-auto max-w-xl border-t border-gold/25 pt-7">
           <h3 className="font-cinzel text-lg text-gold-soft">Dress Code for 18 Roses</h3>
-          <p className="mt-2 text-lg text-beige/85">Black polo shirt and black pants.</p>
+          <p className="mt-2 text-lg text-beige/85">Beige or white top with black pants.</p>
         </div>
       </div>
     </section>
