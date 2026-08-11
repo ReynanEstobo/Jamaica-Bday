@@ -69,6 +69,7 @@ export default function Gallery() {
   }
 
   function handleTouchStart(event) {
+    cancelAnimationFrame(releaseFrameRef.current);
     touchStartX.current = event.touches[0].clientX;
     setIsDragging(true);
     setDragOffset(0);
@@ -86,18 +87,22 @@ export default function Gallery() {
     setDragOffset(distance);
 
     releaseFrameRef.current = requestAnimationFrame(() => {
-      setDragOffset(0);
+      releaseFrameRef.current = requestAnimationFrame(() => {
+        setDragOffset(0);
 
-      if (Math.abs(distance) < 45) return;
+        if (Math.abs(distance) < 45) return;
 
-      suppressClickUntil.current = Date.now() + 350;
-      setActive((current) => current + (distance < 0 ? 1 : -1));
+        suppressClickUntil.current = Date.now() + 350;
+        setActive((current) => current + (distance < 0 ? 1 : -1));
+      });
     });
   }
 
   function handleTouchCancel() {
     setIsDragging(false);
-    setDragOffset(0);
+    releaseFrameRef.current = requestAnimationFrame(() => {
+      releaseFrameRef.current = requestAnimationFrame(() => setDragOffset(0));
+    });
   }
 
   useEffect(() => {
