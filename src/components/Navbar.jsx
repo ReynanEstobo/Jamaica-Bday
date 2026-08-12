@@ -5,7 +5,6 @@ const LINKS = [
   ["#hero", "Home"],
   ["#invitation", "Invitation"],
   ["#about", "About"],
-  ["#dresscode", "Dress Code"],
   {
     label: "Event",
     items: EVENT_LINKS,

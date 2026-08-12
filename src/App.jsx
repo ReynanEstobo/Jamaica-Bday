@@ -8,7 +8,6 @@ import Invitation from "./components/Invitation";
 import About from "./components/About";
 import ItemsSection from "./components/ItemsSection";
 import Timeline from "./components/Timeline";
-import DressCode from "./components/DressCode";
 import Location from "./components/Location";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
@@ -93,8 +92,6 @@ export default function App() {
       <Invitation />
 
       <About />
-
-      <DressCode />
 
       {/* 18 PERFUME */}
       <ItemsSection
