@@ -445,7 +445,7 @@ export default function ItemsSection({
                 name={name}
                 roleLabel={roleLabel}
                 message={messages[index % messages.length]}
-                special={index >= 18}
+                special={id === "candles" && index >= 20}
               />
             ))}
         </div>
