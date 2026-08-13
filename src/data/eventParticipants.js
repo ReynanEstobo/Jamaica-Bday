@@ -22,6 +22,9 @@ export const EVENT_PARTICIPANTS = {
   candles: [
     "Mami Aning Carbayar",
     "Mama Maricel Buhay",
+    "Lola Aida Julongbayan",
+    "lola Nila Julongbayan",
+    "Lola leony Julongbayan",
     "Lola Marilyn Balagot",
     "Lola Juliet Julongbayan",
     "Tita Anne Gumapac",
@@ -52,6 +55,7 @@ export const EVENT_PARTICIPANTS = {
     "Princess Delos Reyes",
     "Sir Ivan Pacquiao Bulontate",
     "Ivy Bagunas",
+    "Samantha Permante",
     "Jerick Valdemero",
     "Fritz Matthew De Jesus",
     "Niedan Castillio",
@@ -61,6 +65,9 @@ export const EVENT_PARTICIPANTS = {
     "John mark Cornejo",
   ],
   shots: [
+    "Lolo dennis Julongbayan",
+    "Kua Obel Liwanag",
+    "kuya John Lloyd Julongbayan",
     "Kuya Christian Buhay",
     "Ninong Allan Bendecio",
     "Kuya Joshua Ramos",
@@ -99,6 +106,9 @@ export const EVENT_PARTICIPANTS = {
     "Kuya Benedict Lopez",
     "Kuya Jm Caraig",
     "Kuya Zandro Julongbayan",
+    "Roland Hernandez",
+    "Ricky Umandap",
+    "Dereck Permante",
   ],
   gifts: [
     "Phoenelopy Reyes",
@@ -119,6 +129,8 @@ export const EVENT_PARTICIPANTS = {
     "Ate maybelyn filler",
     "Ate Sherylyn Ramos",
     "Ate Ycel Carbayar",
+    "Jhonalyn Julongbayan",
+    "Judy ann Liwanag",
   ],
   bills: [
     "Ninong Alex Castillo",
