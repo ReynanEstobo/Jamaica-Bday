@@ -21,7 +21,7 @@ export const EVENT_PARTICIPANTS = {
   ],
   candles: [
     "Mami Aning Carbayar",
-    "Mama Maricel Buhay",
+    "Mama Maricel Buhay Carbayar",
     "Lola Aida Julongbayan",
     "lola Nila Julongbayan",
     "Lola leony Julongbayan",
